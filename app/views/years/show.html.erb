@@ -1,7 +1,6 @@
 <% content_for :title, @year %>
 
-<h2>Thèmes</h2>
-<table class="table mt-5">
+<table class="table">
     <thead>
         <tr>
             <td>Thème</td>
@@ -9,16 +8,15 @@
         </tr>
     </thead>
     <% @year.themes.each do |theme| %>
-        <% days = @year.time_logged_for_theme(theme) %>
+        <% days = @year.days_logged_for_theme(theme) %>
         <% next if days.zero? %>
         <tr>
-            <td><%= theme %></td>
+            <td><%= link_to theme, theme %></td>
             <td><%= days %> jours</td>
         </tr>
     <% end %>
 </table>
 
-<h2>Semaines</h2>
 <table class="table">
     <thead>
         <tr>

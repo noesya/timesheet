@@ -1,4 +1,4 @@
-<h1>Thèmes</h1>
+<% content_for :title, 'Thèmes' %>
 
 <%= link_to "New theme", new_theme_path, class: 'btn btn-primary' %>
 
@@ -7,15 +7,15 @@
     <tr>
       <th>Nom</th>
       <th>Couleur</th>
+      <th>Jours</th>
     </tr>
   </thead>
   <tbody>
     <% @themes.each do |theme| %>
       <tr>
         <td><%= link_to theme, theme %></td>
-        <td>
-          <span class="badge" style="background: <%= theme.color %>"><%= theme.color %></span>
-        </td>
+        <td><span class="badge" style="background: <%= theme.color %>"><%= theme.color %></span></td>
+        <td><%= theme.days_logged %></td>
       </tr>
     <% end %>
   </tbody>

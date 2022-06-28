@@ -55,15 +55,15 @@ class Week < ApplicationRecord
     logs_for(user).reject { |log| log.days.zero? }
   end
 
-  def time_logged_for(user)
+  def days_logged_for(user)
     logs_for(user).sum(:days)
   end
 
   def time_remaining_for(user)
-    MAX_DAYS - time_logged_for(user)
+    MAX_DAYS - days_logged_for(user)
   end
 
-  def time_logged_for_theme(theme)
+  def days_logged_for_theme(theme)
     logs.where(theme: theme).sum(:days)
   end
 

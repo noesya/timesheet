@@ -1,5 +1,24 @@
-<h1><%= @theme %></h1>
+<% content_for :title, @theme %>
+
 <p>
   <span class="badge" style="background: <%= @theme.color %>"><%= @theme.color %></span>
 </p>
-<%= link_to "Edit this theme", edit_theme_path(@theme), class: 'btn btn-primary' %>
+<%= link_to "Modifier", edit_theme_path(@theme), class: 'btn btn-primary' %>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Exercice</td>
+            <td>Jours</td>
+        </tr>
+    </thead>
+    <tbody>
+      <% @years.each do |year| %>
+        <tr>
+          <td><%= link_to year, year %></td>
+          <td><%= year.days_logged_for_theme(@theme) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+

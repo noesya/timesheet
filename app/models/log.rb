@@ -35,7 +35,7 @@ class Log < ApplicationRecord
 
   def increment
     self.days += 1
-    remaining = Week::MAX_DAYS - week.time_logged_for(user)
+    remaining = Week::MAX_DAYS - week.days_logged_for(user)
     self.days = 0 if remaining <= 0
     save
   end
