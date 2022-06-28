@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Timesheet</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><%= yield :title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="preload" as="font" href="https://assets.noesya.coop/fonts/signifier/signifier-web-regular.woff2" type="font/woff2" crossOrigin="anonymous">
+    <link rel="preload" as="font" href="https://assets.noesya.coop/fonts/signifier/signifier-web-regular-italic.woff2" type="font/woff2" crossOrigin="anonymous">
+    <link rel="preload" as="font" href="https://assets.noesya.coop/fonts/signifier/signifier-bold.woff2" type="font/woff2" crossOrigin="anonymous">
+    <link rel="preload" as="font" href="https://assets.noesya.coop/fonts/soehne/soehne-web-buch.woff2" type="font/woff2" crossOrigin="anonymous">
+    <link rel="stylesheet" href="https://www.noesya.coop/assets/css/theme.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js" integrity="sha256-cHVO4dqZfamRhWD7s4iXyaXWVK10odD+qp4xidFzqTI=" crossorigin="anonymous"></script>
   </head>
-
   <body>
     <main class="container">
+      <h1 class="text-center mt-5"><%= yield :title %></h1>
       <%= yield %>
     </main>
   </body>

@@ -1,4 +1,4 @@
-
+<% content_for :title, @week %>
 <% 
 logs = week.non_empty_logs_for(current_user)
 remaining = week.time_remaining_for(current_user)
@@ -9,9 +9,12 @@ labels << 'Non affecté'
 days << remaining
 colors << '#CCCCCC'
 %>
-
-<h1><%= week %></h1>
-<p>Du <%= l week.starting_at %> au <%= l week.ending_at %></p>
+<p class="text-center">Du <%= l week.starting_at %> au <%= l week.ending_at %></p>
+<div class="row border-top border-bottom my-5 py-4">
+    <div class="col-md-4"><%= link_to @week.previous, @week.previous %></div>
+    <div class="col-md-4 text-center"><%= link_to week.year, week.year %></div>
+    <div class="col-md-4 text-end"><%= link_to @week.next, @week.next %></div>
+</div>
 
 <div class="row">
     <div class="col-lg-6">
@@ -71,10 +74,3 @@ const myChart = new Chart(ctx, {
         </tr>
     <% end %>
 </table>
-
-<hr class="my-5">
-<div class="row">
-    <div class="col-md-4"><%= link_to @week.previous, @week.previous %></div>
-    <div class="col-md-4 text-center"><%= link_to week.year, week.year %></div>
-    <div class="col-md-4 text-end"><%= link_to @week.next, @week.next %></div>
-</div>
