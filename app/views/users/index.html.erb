@@ -1,0 +1,17 @@
+<% content_for :title, 'Utilisateurs' %>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Mail</td>
+        </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+
