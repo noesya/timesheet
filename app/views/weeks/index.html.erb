@@ -1,0 +1,19 @@
+<h1>Semaines</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Semaine</td>
+            <td>Année</td>
+        </tr>
+    </thead>
+    <tbody>
+      <% @weeks.each do |week| %>
+        <tr>
+          <td><%= link_to week, week %></td>
+          <td><%= link_to week.year, week.year %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+

@@ -1,0 +1,23 @@
+<h1>Thèmes</h1>
+
+<%= link_to "New theme", new_theme_path, class: 'btn btn-primary' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Couleur</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @themes.each do |theme| %>
+      <tr>
+        <td><%= link_to theme, theme %></td>
+        <td>
+          <span class="badge" style="background: <%= theme.color %>"><%= theme.color %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

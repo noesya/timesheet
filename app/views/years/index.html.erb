@@ -1,0 +1,11 @@
+<h1>Exercices</h1>
+
+<div class="row">
+  <% @years.each do |year| %>
+    <div class="col-md-3">
+      <%= link_to year, year %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "New year", new_year_path %>

@@ -1,0 +1,38 @@
+<h1><%= @year %></h1>
+
+<h2>Thèmes</h2>
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <td>Thème</td>
+            <td>Jours</td>
+        </tr>
+    </thead>
+    <% @year.themes.each do |theme| %>
+        <% days = @year.time_logged_for_theme(theme) %>
+        <% next if days.zero? %>
+        <tr>
+            <td><%= theme %></td>
+            <td><%= days %> jours</td>
+        </tr>
+    <% end %>
+</table>
+
+<h2>Semaines</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <td>Semaine</td>
+            <td>Jours</td>
+        </tr>
+    </thead>
+    <tbody>
+      <% @year.weeks.each do |week| %>
+        <tr>
+          <td><%= link_to week, week %></td>
+          <td><%= week.days_logged %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+
