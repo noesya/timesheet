@@ -7,6 +7,7 @@
 
 
 <% @years.each do |year| %>
+  <% users = @users.reject { |user| user.days_logged(theme: @theme, year: year).zero? } %>
   <h2 class="my-5"><%= link_to year, year %></h2>
   <p class="lead"><%= year.days_logged_for_theme(@theme) %> jours</p>
   <table class="table mb-5">
@@ -17,14 +18,10 @@
         </tr>
     </thead>
     <tbody>
-      <% @users.each do |user| %>
-        <% 
-        days = user.days_logged(theme: @theme, year: year) 
-        next if days.zero?
-        %>
+      <% users.each do |user| %>
         <tr>
           <td><%= link_to user, user %></td>
-          <td><%= days %></td>
+          <td><%= user.days_logged(theme: @theme, year: year)  %></td>
         </tr>
       <% end %>
     </tbody>
@@ -34,11 +31,7 @@
     <thead>
         <tr>
             <th>Semaine</th>
-            <% @users.each do |user| %>
-              <% 
-              days = user.days_logged(theme: @theme, year: year) 
-              next if days.zero?
-              %>
+            <% users.each do |user| %>
               <th><%= user %></th>
             <% end %>
         </tr>
@@ -47,12 +40,8 @@
       <% year.weeks.each do |week| %>
         <tr>
           <td><%= link_to week, week %></td>
-          <% @users.each do |user| %>
-            <% 
-            days = user.days_logged(theme: @theme, week: week) 
-            next if days.zero?
-            %>
-            <td><%= days %></td>
+          <% users.each do |user| %>
+            <td><%= user.days_logged(theme: @theme, week: week)  %></td>
           <% end %>
         </tr>
       <% end %>
