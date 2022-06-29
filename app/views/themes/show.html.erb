@@ -1,24 +1,62 @@
 <% content_for :title, @theme %>
 
-<p>
+<p class="text-center">
   <span class="badge" style="background: <%= @theme.color %>"><%= @theme.color %></span>
+  <%= link_to "Modifier", edit_theme_path(@theme), class: 'btn btn-light btn-sm' %>
 </p>
-<%= link_to "Modifier", edit_theme_path(@theme), class: 'btn btn-primary' %>
 
-<table class="table">
+
+<% @years.each do |year| %>
+  <h2 class="my-5"><%= link_to year, year %></h2>
+  <p class="lead"><%= year.days_logged_for_theme(@theme) %> jours</p>
+  <table class="table mb-5">
     <thead>
         <tr>
-            <td>Exercice</td>
-            <td>Jours</td>
+            <th>Personne</th>
+            <th>Jours</th>
         </tr>
     </thead>
     <tbody>
-      <% @years.each do |year| %>
+      <% @users.each do |user| %>
+        <% 
+        days = user.days_logged(theme: @theme, year: year) 
+        next if days.zero?
+        %>
         <tr>
-          <td><%= link_to year, year %></td>
-          <td><%= year.days_logged_for_theme(@theme) %></td>
+          <td><%= link_to user, user %></td>
+          <td><%= days %></td>
         </tr>
       <% end %>
     </tbody>
-</table>
+  </table>
+
+  <table class="table table-bordered mb-5">
+    <thead>
+        <tr>
+            <th>Semaine</th>
+            <% @users.each do |user| %>
+              <% 
+              days = user.days_logged(theme: @theme, year: year) 
+              next if days.zero?
+              %>
+              <th><%= user %></th>
+            <% end %>
+        </tr>
+    </thead>
+    <tbody>
+      <% year.weeks.each do |week| %>
+        <tr>
+          <td><%= link_to week, week %></td>
+          <% @users.each do |user| %>
+            <% 
+            days = user.days_logged(theme: @theme, week: week) 
+            next if days.zero?
+            %>
+            <td><%= days %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 

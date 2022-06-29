@@ -9,6 +9,7 @@ class ThemesController < ApplicationController
   # GET /themes/1 or /themes/1.json
   def show
     @years = Year.all
+    @users = User.all
   end
 
   # GET /themes/new

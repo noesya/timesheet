@@ -9,7 +9,7 @@ labels << 'Non affecté'
 days << remaining
 colors << '#EEEEEE'
 %>
-<p class="text-center">Du <%= l week.starting_at %> au <%= l week.ending_at %></p>
+<p>Du <%= l week.starting_at %> au <%= l week.ending_at %></p>
 <div class="row border-top border-bottom my-5 py-4">
     <div class="col-md-4"><%= link_to @week.previous, @week.previous %></div>
     <div class="col-md-4 text-center"><%= link_to week.year, week.year %></div>
@@ -69,7 +69,7 @@ const myChart = new Chart(ctx, {
         <% days = week.days_logged_for_theme(theme) %>
         <% next if days.zero? %>
         <tr>
-            <td><%= theme %></td>
+            <td><%= link_to theme, theme %></td>
             <td><%= days %> jours</td>
         </tr>
     <% end %>

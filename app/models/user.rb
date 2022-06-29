@@ -23,6 +23,14 @@ class User < ApplicationRecord
 
   has_many :logs
 
+  def days_logged(year: nil, theme: nil, week: nil)
+    scope = logs
+    scope = scope.where(year: year) unless year.nil?
+    scope = scope.where(theme: theme) unless theme.nil?
+    scope = scope.where(week: week) unless week.nil?
+    scope.sum(:days)
+  end
+
   def to_s
     "#{email}"
   end
