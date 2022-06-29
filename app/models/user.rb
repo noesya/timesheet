@@ -18,10 +18,17 @@
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  # :confirmable, :lockable, :timeoutable and :trackable
+  devise  :database_authenticatable, :registerable, :recoverable,
+          :rememberable, :validatable, :omniauthable, omniauth_providers: [:saml]
 
   has_many :logs
+
+  def self.from_omniauth(auth)
+    User.where(email: auth.uid.downcase).first_or_create do |u|
+      u.password = "#{Devise.friendly_token[0,20]}!"
+    end
+  end
 
   def days_logged(year: nil, theme: nil, week: nil)
     scope = logs

@@ -271,7 +271,11 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :saml,
+                  issuer:                 ENV["SAML_ISSUER"],
+                  idp_sso_target_url:     ENV["SAML_TARGET_URL"],
+                  idp_cert:               Base64.decode64(ENV["SAML_BASE64_CERTIFICATE"]),
+                  name_identifier_format: ENV["SAML_NAMEID_FORMAT"]
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
