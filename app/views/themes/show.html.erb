@@ -1,6 +1,6 @@
 <% content_for :title, @theme %>
 
-<p class="text-center">
+<p>
   <span class="badge" style="background: <%= @theme.color %>"><%= @theme.color %></span>
   <%= link_to "Modifier", edit_theme_path(@theme), class: 'btn btn-light btn-sm' %>
 </p>

@@ -21,7 +21,7 @@
 class Week < ApplicationRecord
   belongs_to :year
   has_many :logs, dependent: :destroy
-  has_many :themes, through: :logs
+  has_many :themes, -> { distinct }, through: :logs
 
   MAX_DAYS = 5
 
