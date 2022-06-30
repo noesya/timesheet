@@ -274,7 +274,7 @@ Devise.setup do |config|
   config.omniauth :saml,
                   issuer:                 ENV["SAML_ISSUER"],
                   idp_sso_target_url:     ENV["SAML_TARGET_URL"],
-                  idp_cert:               Base64.decode64(ENV["SAML_BASE64_CERTIFICATE"]),
+                  idp_cert:               Base64.decode64(ENV["SAML_BASE64_CERTIFICATE"].to_s),
                   name_identifier_format: ENV["SAML_NAMEID_FORMAT"]
 
   # ==> Warden configuration
