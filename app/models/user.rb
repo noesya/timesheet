@@ -38,7 +38,11 @@ class User < ApplicationRecord
     scope.sum(:days)
   end
 
+  def human
+    email.split('@').first.gsub('.', ' ').titleize
+  end
+
   def to_s
-    "#{email}"
+    "#{human}"
   end
 end
