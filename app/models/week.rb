@@ -79,11 +79,9 @@ class Week < ApplicationRecord
 
   def prepare
     number_with_initial_zero = sprintf( "%02d", number)
-    if from.month <= Year::LAST_FISCAL_MONTH # 01/2022 -> 08/2022, donc année numérotée 2021, donc date 2022 en vrai 
-      from = Date.parse("#{year.number + 1 }W#{number_with_initial_zero}")
-    else # 09/2022 -> 12/2022, donc 2022, donc on touche à rien
-      from = Date.parse("#{year.number}W#{number_with_initial_zero}")
-    end
+    year_number = from.month <= Year::LAST_FISCAL_MONTH ? year.number + 1  # 01/2022 -> 08/2022, donc année numérotée 2021, donc date 2022 en vrai
+                                                        : year.number      # 09/2022 -> 12/2022, donc 2022, donc on touche à rien
+    from = Date.parse("#{year_number}W#{number_with_initial_zero}")
     self.starting_at = from
     self.ending_at = from + 5.days
   end
