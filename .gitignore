@@ -39,3 +39,5 @@
 /db/latest.dump
 
 /config/application.yml
+
+.dump

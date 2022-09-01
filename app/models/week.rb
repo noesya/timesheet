@@ -80,7 +80,6 @@ class Week < ApplicationRecord
   def prepare
     number_with_initial_zero = sprintf( "%02d", number)
     from = Date.parse("#{year.number}W#{number_with_initial_zero}")
-    from = Date.parse("#{year.number + 1 }W#{number_with_initial_zero}") if from.month <= Year::LAST_FISCAL_MONTH
     self.starting_at = from
     self.ending_at = from + 5.days
   end

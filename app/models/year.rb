@@ -19,6 +19,9 @@ class Year < ApplicationRecord
     at_date Date.today
   end
 
+  # janvier 2022 -> 2021
+  # septembre 2022 -> 2022
+  # janvier 2023 -> 2022
   def self.at_date(date)
     year = date.year
     year -= 1 if date.month <= LAST_FISCAL_MONTH

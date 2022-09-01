@@ -10,7 +10,13 @@
 require "test_helper"
 
 class YearTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "january" do
+    assert_equal  Year.at_date(Date.new(2022, 1, 1)).number,
+                  2021
+  end
+
+  test "september" do
+    assert_equal  Year.at_date(Date.new(2022, 9, 1)).number, 
+                  2022
+  end
 end
