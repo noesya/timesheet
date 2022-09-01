@@ -22,33 +22,33 @@ require "test_helper"
 
 class WeekTest < ActiveSupport::TestCase
   test "01/01/2022 in 2021" do
-    assert_equal  Week.at_date(Date.new(2022, 1, 1)).year.number, 
-                  2021
-  end
-
-  test "01/01/2022 correct starting_at" do
-    assert_equal  Week.at_date(Date.new(2022, 1, 1)).starting_at, 
-                  Date.new(2021, 12, 27)
+    assert_equal  2021,
+                  Week.at_date(Date.new(2022, 1, 1)).year.number
   end
 
   test "01/09/2022 in 2022" do
-    assert_equal  Week.at_date(Date.new(2022, 9, 1)).year.number, 
-                  2022
-  end
-
-  test "01/09/2022 correct starting_at" do
-    assert_equal  Week.at_date(Date.new(2022, 9, 1)).starting_at, 
-                  Date.new(2022, 8, 29)
+    assert_equal  2022,
+                  Week.at_date(Date.new(2022, 9, 1)).year.number
   end
 
   test "01/12/2022 in 2022" do
-    assert_equal  Week.at_date(Date.new(2022, 12, 1)).year.number, 
-                  2022
+    assert_equal  2022,
+                  Week.at_date(Date.new(2022, 12, 1)).year.number
+  end
+
+  test "01/01/2022 correct starting_at" do
+    assert_equal  Date.new(2021, 12, 27),
+                  Week.at_date(Date.new(2022, 1, 1)).starting_at
+  end
+
+  test "01/09/2022 correct starting_at" do
+    assert_equal  Date.new(2022, 8, 29),
+                  Week.at_date(Date.new(2022, 9, 1)).starting_at
   end
 
   test "01/12/2022 correct starting_at" do
-    assert_equal  Week.at_date(Date.new(2022, 12, 1)).starting_at, 
-                  Date.new(2022, 11, 28)
+    assert_equal  Date.new(2022, 11, 28),
+                  Week.at_date(Date.new(2022, 12, 1)).starting_at
   end
 
 end
