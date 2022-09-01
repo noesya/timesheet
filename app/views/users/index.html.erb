@@ -3,13 +3,15 @@
 <table class="table">
     <thead>
         <tr>
+            <td>Nom</td>
             <td>Mail</td>
         </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= user %></td>
+          <td><%= link_to user, user %></td>
+          <td><%= user.email %></td>
         </tr>
       <% end %>
     </tbody>

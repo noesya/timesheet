@@ -1,1 +1,26 @@
 <% content_for :title, @user %>
+
+<% @years.each do |year| %>
+  <table class="table">
+    <thead>
+        <tr>
+            <td><%= year %></td>
+            <td>Jours</td>
+        </tr>
+    </thead>
+    <% year.themes.each do |theme| %>
+        <% days = @user.days_logged(year: year, theme: theme) %>
+        <% next if days.zero? %>
+        <tr>
+            <td><%= link_to theme, theme %></td>
+            <td><%= days %> jours</td>
+        </tr>
+    <% end %>
+    <tfoot>
+      <tr>
+        <th>Total <%= year.to_s.downcase %></th>
+        <th><%= @user.days_logged(year: year) %> jours</th>
+      <tr>
+    </tfoot>
+</table>
+<% end %>

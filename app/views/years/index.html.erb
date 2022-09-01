@@ -1,11 +1,9 @@
 <% content_for :title, 'Exercices' %>
 
-<div class="row">
+<ul>
   <% @years.each do |year| %>
-    <div class="col-md-3">
-      <%= link_to year, year %>
-    </div>
+    <li class="mb-3"><%= link_to year, year %></li>
   <% end %>
-</div>
+</ul>
 
 <%= link_to "New year", new_year_path %>

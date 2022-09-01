@@ -12,6 +12,8 @@ class Year < ApplicationRecord
   has_many :logs
   has_many :themes, -> { distinct }, through: :logs
 
+  scope :ordered, -> { order(number: :desc)}
+
   # noesya fiscal years go from september to august
   LAST_FISCAL_MONTH = 8
 
