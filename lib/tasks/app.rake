@@ -14,9 +14,4 @@ namespace :app do
       sh 'rails db:migrate'
     end
   end
-
-  task fix: :environment do
-    Week.where('id >= ?', 55).destroy_all
-    Week.where('id >= ?', 4).destroy_all
-  end
 end
