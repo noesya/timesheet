@@ -1,4 +1,17 @@
 namespace :app do
+  task fix: :environment do
+    Week.find_each do |week|
+      year = Year.with week.starting_at.year
+      puts "#{week}, #{week.starting_at} -> #{year}"
+      week.year = year
+      week.save
+      week.logs.find_each do |log|
+        log.year = year
+        log.save
+      end
+    end
+  end
+
   desc 'Get database'
   task :db do
     Bundler.with_original_env do

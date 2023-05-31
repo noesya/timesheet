@@ -9,6 +9,8 @@ class WeeksController < ApplicationController
   # GET /weeks/1 or /weeks/1.json
   def show
     @themes = Theme.all
+    @user = params.has_key?(:user_id) ? User.find(params[:user_id]) 
+                                      : current_user
   end
 
   # GET /weeks/new

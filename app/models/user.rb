@@ -42,7 +42,11 @@ class User < ApplicationRecord
     email.split('@').first.gsub('.', ' ').titleize
   end
 
+  def initials
+    human.split(' ').map { |part| part.first }.join('')
+  end
+
   def to_s
-    "#{human}"
+    "#{initials}"
   end
 end

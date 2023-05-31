@@ -8,7 +8,8 @@ class ThemesController < ApplicationController
 
   # GET /themes/1 or /themes/1.json
   def show
-    @years = Year.all
+    @year = Year.find params[:year_id] if params.has_key?(:year_id)
+    @years = @year ? [@year] : Year.all.ordered
     @users = User.all
   end
 

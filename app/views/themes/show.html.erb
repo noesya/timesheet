@@ -1,6 +1,7 @@
 <% content_for :title, @theme %>
+<% content_for :surtitle, link_to('Thèmes', themes_path) unless @year %>
 
-<p>
+<p class="d-print-none">
   <span class="badge" style="background: <%= @theme.color %>"><%= @theme.color %></span>
   <%= link_to "Modifier", edit_theme_path(@theme), class: 'btn btn-light btn-sm' %>
 </p>
@@ -8,9 +9,9 @@
 
 <% @years.each do |year| %>
   <% users = @users.reject { |user| user.days_logged(theme: @theme, year: year).zero? } %>
-  <h2 class="my-5"><%= link_to year, year %></h2>
+  <h2 class="h3 mt-5 mb-3"><%= year %></h2>
   <p class="lead"><%= year.days_logged_for_theme(@theme) %> jours</p>
-  <table class="table mb-5">
+  <table class="table table-hover mb-5">
     <thead>
         <tr>
             <th>Personne</th>
@@ -27,10 +28,11 @@
     </tbody>
   </table>
 
-  <table class="table table-bordered mb-5">
+  <table class="table table-hover mb-5">
     <thead>
         <tr>
             <th>Semaine</th>
+            <th>Jours</th>
             <% users.each do |user| %>
               <th><%= user %></th>
             <% end %>
@@ -40,6 +42,7 @@
       <% year.weeks.each do |week| %>
         <tr>
           <td><%= link_to week, week %></td>
+          <td><%= week.days_logged_for_theme(@theme) %></td>
           <% users.each do |user| %>
             <td><%= user.days_logged(theme: @theme, week: week)  %></td>
           <% end %>

@@ -11,23 +11,16 @@ class Year < ApplicationRecord
   has_many :weeks, dependent: :destroy
   has_many :logs
   has_many :themes, -> { distinct }, through: :logs
+  has_many :users, -> { distinct }, through: :logs
 
   scope :ordered, -> { order(number: :desc)}
-
-  # noesya fiscal years go from september to august
-  LAST_FISCAL_MONTH = 8
 
   def self.current
     at_date Date.today
   end
 
-  # janvier 2022 -> 2021
-  # septembre 2022 -> 2022
-  # janvier 2023 -> 2022
   def self.at_date(date)
-    year = date.year
-    year -= 1 if date.month <= LAST_FISCAL_MONTH
-    with year
+    with date.year
   end
 
   def self.with(number)
@@ -39,6 +32,6 @@ class Year < ApplicationRecord
   end
 
   def to_s
-    "Exercice #{number} - #{ number + 1 }"
+    "Année #{number}"
   end
 end

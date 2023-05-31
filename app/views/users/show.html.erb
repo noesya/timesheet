@@ -1,26 +1,81 @@
 <% content_for :title, @user %>
+<% content_for :surtitle, link_to('Personnes', users_path) %>
 
 <% @years.each do |year| %>
-  <table class="table">
-    <thead>
-        <tr>
-            <td><%= year %></td>
-            <td>Jours</td>
-        </tr>
-    </thead>
-    <% year.themes.each do |theme| %>
-        <% days = @user.days_logged(year: year, theme: theme) %>
-        <% next if days.zero? %>
-        <tr>
-            <td><%= link_to theme, theme %></td>
-            <td><%= days %> jours</td>
-        </tr>
-    <% end %>
-    <tfoot>
-      <tr>
-        <th>Total <%= year.to_s.downcase %></th>
-        <th><%= @user.days_logged(year: year) %> jours</th>
-      <tr>
-    </tfoot>
-</table>
+  <h2 class="h3 mt-5 mb-2"><%= year %></h2>
+  <p><%= @user.days_logged(year: year) %> jours notés</p>
+  <%
+  data = {
+    themes: [],
+    days: [],
+    colors: []
+  }
+  %>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-hover">
+        <thead>
+            <tr>
+                <th width="200">Thèmes</th>
+                <th class="text-end">Jours</th>
+            </tr>
+        </thead>
+        <% year.themes.each do |theme| %>
+            <% days = @user.days_logged(year: year, theme: theme) %>
+            <% next if days.zero? %>
+            <% 
+            data[:themes] << theme.to_s
+            data[:days] << days
+            data[:colors] << theme.color
+            %>
+            <tr>
+                <td><%= link_to theme, theme %></td>
+                <td class="text-end"><%= days %> jours</td>
+            </tr>
+        <% end %>
+      </table>
+      <table class="table table-hover">
+        <thead>
+            <tr>
+                <th width="200">Semaines</th>
+                <th class="text-end">Jours</th>
+            </tr>
+        </thead>
+        <% year.weeks.each do |week| %>
+            <% days = @user.days_logged(week: week) %>
+            <tr>
+                <td><%= link_to week, user_week_path(user_id: @user.id, id: week.id) %></td>
+                <td class="text-end"><%= days %> jours</td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <div class="chart-container" style="position: relative; height:40vh; width: 100%">
+        <canvas id="chart-<%= year.number %>" width="400" height="400"></canvas>
+      </div>
+      <script>
+      const canvas<%= year.number %> = document.getElementById('chart-<%= year.number %>').getContext('2d');
+      const chart<%= year.number %> = new Chart(canvas<%= year.number %>, {
+          type: 'pie',
+          data: {
+              labels: <%= raw data[:themes].to_json %>,
+              datasets: [{
+                  label: 'jours',
+                  data: <%= raw data[:days].to_json %>,
+                  backgroundColor: <%= raw data[:colors].to_json %>
+              }]
+          },
+          options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                  legend: { display: false },
+              }
+          }
+      });
+      </script>
+    </div>
+  </div>
 <% end %>
