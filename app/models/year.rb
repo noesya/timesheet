@@ -27,6 +27,10 @@ class Year < ApplicationRecord
     where(number: number).first_or_create
   end
 
+  def days_logged
+    logs.sum(:days)
+  end
+
   def days_logged_for_theme(theme)
     logs.where(theme: theme).sum(:days)
   end

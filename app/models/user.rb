@@ -47,6 +47,6 @@ class User < ApplicationRecord
   end
 
   def to_s
-    "#{initials}"
+    "#{human}"
   end
 end

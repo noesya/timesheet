@@ -1,6 +1,8 @@
 <% content_for :title, @user %>
 <% content_for :surtitle, link_to('Personnes', users_path) %>
 
+<p><%= @user.email %></p>
+
 <% @years.each do |year| %>
   <h2 class="h3 mt-5 mb-2"><%= year %></h2>
   <p><%= @user.days_logged(year: year) %> jours notés</p>

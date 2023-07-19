@@ -5,6 +5,7 @@
         <tr>
             <td>Nom</td>
             <td>Mail</td>
+            <td>Jours</td>
         </tr>
     </thead>
     <tbody>
@@ -12,8 +13,30 @@
         <tr>
           <td><%= link_to user, user %></td>
           <td><%= user.email %></td>
+          <td><%= user.days_logged %></td>
         </tr>
       <% end %>
     </tbody>
 </table>
 
+<% @years.each do |year| %>
+  <% users = @users.reject { |user| user.days_logged(theme: @theme, year: year).zero? } %>
+  <h2 class="h3 mt-5 mb-3"><%= year %></h2>
+  <p class="lead"><%= year.days_logged %> jours</p>
+  <table class="table table-hover mb-5">
+    <thead>
+        <tr>
+            <th>Personne</th>
+            <th>Jours</th>
+        </tr>
+    </thead>
+    <tbody>
+      <% users.each do |user| %>
+        <tr>
+          <td><%= link_to user, user %></td>
+          <td><%= user.days_logged(theme: @theme, year: year)  %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
