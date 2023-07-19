@@ -1,6 +1,6 @@
 <% content_for :title, @week %>
 <% content_for :surtitle, link_to(@user, @user) unless @user == current_user %>
-<% 
+<%
 logs = week.non_empty_logs_for(@user)
 remaining = week.time_remaining_for(@user)
 labels = logs.map { |log| log.theme.to_s }
@@ -20,7 +20,7 @@ colors << '#EEEEEE'
 <div class="row">
     <div class="col-lg-6">
         <% @themes.each do |theme| %>
-            <%= link_to log_path(week: week, theme: theme, user: @user), class: 'btn ps-0 me-2 mb-2' do %>
+            <%= link_to log_path(week: week, theme: theme, user: @user), class: 'btn btn-light me-2 mb-2' do %>
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="<%= theme.color %>" class="bi bi-circle-fill align-baseline me-1" viewBox="0 0 16 16">
                     <circle cx="8" cy="8" r="8"></circle>
                 </svg>
