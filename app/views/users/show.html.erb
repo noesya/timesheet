@@ -7,6 +7,7 @@
   <h2 class="h3 mt-5 mb-2"><%= year %></h2>
   <p><%= @user.days_logged(year: year) %> jours notés</p>
   <%
+  themes = []
   data = {
     themes: [],
     days: [],
@@ -17,38 +18,23 @@
     <div class="col-md-6">
       <table class="table table-hover">
         <thead>
-            <tr>
-                <th width="200">Thèmes</th>
-                <th class="text-end">Jours</th>
-            </tr>
+          <tr>
+            <th>Thèmes</th>
+            <th class="text-end">Jours</th>
+          </tr>
         </thead>
-        <% year.themes.each do |theme| %>
-            <% days = @user.days_logged(year: year, theme: theme) %>
-            <% next if days.zero? %>
-            <% 
-            data[:themes] << theme.to_s
-            data[:days] << days
-            data[:colors] << theme.color
-            %>
-            <tr>
-                <td><%= link_to theme, theme %></td>
-                <td class="text-end"><%= days %> jours</td>
-            </tr>
-        <% end %>
-      </table>
-      <table class="table table-hover">
-        <thead>
-            <tr>
-                <th width="200">Semaines</th>
-                <th class="text-end">Jours</th>
-            </tr>
-        </thead>
-        <% year.weeks.each do |week| %>
-            <% days = @user.days_logged(week: week) %>
-            <tr>
-                <td><%= link_to week, user_week_path(user_id: @user.id, id: week.id) %></td>
-                <td class="text-end"><%= days %> jours</td>
-            </tr>
+        <% year.themes.each do |theme| 
+          days = @user.days_logged(year: year, theme: theme)
+          next if days.zero?
+          themes << theme
+          data[:themes] << theme.to_s
+          data[:days] << days
+          data[:colors] << theme.color
+          %>
+          <tr>
+            <td><%= link_to theme, theme %></td>
+            <td class="text-end"><%= days %> jours</td>
+          </tr>
         <% end %>
       </table>
     </div>
@@ -80,4 +66,25 @@
       </script>
     </div>
   </div>
+  <table class="table table-hover mt-5">
+    <thead>
+        <tr>
+            <th>Semaines</th>
+            <% themes.each do |theme| %>
+              <th><%= theme %></th>
+            <% end %>
+            <th class="text-end">Jours</th>
+        </tr>
+    </thead>
+    <% year.weeks.each do |week| %>
+        <% days = @user.days_logged(week: week) %>
+        <tr>
+            <td><%= link_to week, user_week_path(user_id: @user.id, id: week.id) %></td>
+            <% themes.each do |theme| %>
+              <th><%= @user.days_logged(week: week, theme: theme) %></th>
+            <% end %>
+            <td class="text-end"><%= days %> jours</td>
+        </tr>
+    <% end %>
+  </table>
 <% end %>
