@@ -80,10 +80,12 @@
         <% days = @user.days_logged(week: week) %>
         <tr>
             <td><%= link_to week, user_week_path(user_id: @user.id, id: week.id) %></td>
-            <% themes.each do |theme| %>
-              <th><%= @user.days_logged(week: week, theme: theme) %></th>
+            <% if days > 0 %>
+              <% themes.each do |theme| %>
+                <th><%= @user.days_logged(week: week, theme: theme) %></th>
+              <% end %>
+              <td class="text-end"><%= days %> jours</td>
             <% end %>
-            <td class="text-end"><%= days %> jours</td>
         </tr>
     <% end %>
   </table>
