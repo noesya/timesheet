@@ -9,7 +9,7 @@
 
 <% @years.each do |year| %>
   <% users = @users.reject { |user| user.days_logged(theme: @theme, year: year).zero? } %>
-  <h2 class="h3 mt-5 mb-3"><%= year %></h2>
+  <h2 class="h3 mt-5 mb-3"><%= link_to year, year_theme_path(year_id: year, id: @theme) %></h2>
   <p class="lead"><%= year.days_logged_for_theme(@theme) %> jours</p>
   <table class="table table-hover mb-5">
     <thead>
