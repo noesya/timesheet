@@ -20,7 +20,7 @@ class Year < ApplicationRecord
   end
 
   def self.at_date(date)
-    with date.year
+    with date.cwyear
   end
 
   def self.with(number)
