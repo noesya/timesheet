@@ -9,29 +9,27 @@ gem "devise"
 gem "jsbundling-rails"
 gem "jbuilder"
 gem "omniauth", "~> 2.1"
-gem "omniauth-rails_csrf_protection", "~> 1.0"
-gem "omniauth-saml", "~> 2.1"
-gem "pg", "~> 1.1"
-gem "puma", "~> 7.0"
-gem "rails", "~> 8.0"
+gem "omniauth-rails_csrf_protection", "~> 2.0"
+gem "omniauth-saml", "~> 2.2"
+gem "pg", "~> 1.6"
+gem "puma", "~> 7.1"
+gem "rails", "~> 8.1"
 gem "rails-i18n"
-gem "redis", "~> 4.0"
 gem "simple_form"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
-  gem "figaro", "~> 1.2"
+  gem "figaro", "~> 1.3"
 end
 
 group :development do
-  gem "web-console"
   gem "annotaterb"
+  gem "web-console"
 end
 
 group :test do
   gem "capybara"
-  gem "selenium-webdriver"
   gem "webdrivers"
 end
