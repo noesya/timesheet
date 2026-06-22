@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "4.0.3"
+ruby "4.0.5"
 
 gem "bootsnap", require: false
 gem "cssbundling-rails"
@@ -12,7 +12,7 @@ gem "omniauth", "~> 2.1"
 gem "omniauth-rails_csrf_protection", "~> 2.0"
 gem "omniauth-saml", "~> 2.2"
 gem "pg", "~> 1.6"
-gem "puma", "~> 7.1"
+gem "puma", "~> 8.0"
 gem "rails", "~> 8.1.0"
 gem "rails-i18n"
 gem "simple_form"
