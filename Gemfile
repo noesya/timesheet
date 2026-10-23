@@ -1,14 +1,14 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "4.0.7"
+ruby "4.0.9"
 
 gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "devise"
 gem "jsbundling-rails"
 gem "jbuilder"
-gem "omniauth", "~> 2.1"
+gem "omniauth", "~> 2.3"
 gem "omniauth-rails_csrf_protection", "~> 2.0"
 gem "omniauth-saml", "~> 2.2"
 gem "pg", "~> 1.7"
