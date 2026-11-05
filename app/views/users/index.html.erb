@@ -1,6 +1,6 @@
 <% content_for :title, 'Personnes' %>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <td>Nom</td>
@@ -25,7 +25,7 @@
   <% users = @users.reject { |user| user.days_logged(theme: @theme, year: year).zero? } %>
   <h2 class="h3 mt-5 mb-3"><%= year %></h2>
   <p class="lead"><%= year.days_logged %> jours</p>
-  <table class="table table-hover mb-5">
+  <table class="table table-striped mb-5">
     <thead>
         <tr>
             <th>Personne</th>

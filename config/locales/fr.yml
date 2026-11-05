@@ -1,6 +1,12 @@
 fr:
   activerecord:
     attributes:
+      cycle:
+        code: Code identifiant
+        description: Description
+        ended_at: Fin
+        name: Nom du cycle
+        started_at: Début
       theme:
         name: Nom
         color: Couleur

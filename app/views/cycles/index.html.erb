@@ -1,0 +1,22 @@
+<% content_for :title, "Cycles" %>
+
+<%= link_to "Créer", new_cycle_path, class: 'btn btn-primary' %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Début</th>
+      <th>Fin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cycles.each do |cycle| %>
+      <tr>
+        <td><%= link_to cycle, cycle %></td>
+        <td><%= l cycle.started_at if cycle.started_at %></td>
+        <td><%= l cycle.ended_at if cycle.ended_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
