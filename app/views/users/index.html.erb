@@ -6,6 +6,7 @@
             <td>Nom</td>
             <td>Mail</td>
             <td>Jours</td>
+            <td>Coût / jour</td>
         </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
           <td><%= link_to user, user %></td>
           <td><%= user.email %></td>
           <td><%= user.days_logged %></td>
+          <td><%= number_to_currency user.cost_per_day, precision: 0 %></td>
         </tr>
       <% end %>
     </tbody>
