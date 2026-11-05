@@ -27,6 +27,8 @@ class User < ApplicationRecord
 
   has_many :logs
 
+  default_scope { order(:last_name, :first_name) }
+
   def self.from_omniauth(auth)
     User.where(email: auth.uid.downcase).first_or_create do |u|
       u.password = "#{Devise.friendly_token[0,20]}!"
