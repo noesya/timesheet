@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   }
 
   resources :themes, :weeks
-  resources :users, only: [:index, :show] do
+  resources :users, only: [:index, :show, :edit, :update] do
     resources :weeks
   end
   resources :years do

@@ -1,7 +1,14 @@
 <% content_for :title, @user %>
 <% content_for :surtitle, link_to('Personnes', users_path) %>
 
-<p><%= @user.email %></p>
+<p class="d-print-none">
+  <%= link_to "Modifier", edit_user_path(@user), class: 'btn btn-light btn-sm' %>
+</p>
+
+<p>
+  <%= @user.email %>,
+  <%= number_to_currency @user.cost_per_day, precision: 0 %>
+</p>
 
 <% @years.each do |year| %>
   <h2 class="h3 mt-5 mb-2"><%= year %></h2>

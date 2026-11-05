@@ -3,8 +3,11 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  cost_per_day           :integer          default(0)
 #  email                  :string           default(""), not null, uniquely indexed
 #  encrypted_password     :string           default(""), not null
+#  first_name             :string
+#  last_name              :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string           uniquely indexed
@@ -44,15 +47,11 @@ class User < ApplicationRecord
     (100.0 / days_total * days_logged).round
   end
 
-  def human
-    email.split('@').first.gsub('.', ' ').titleize
-  end
-
   def initials
-    human.split(' ').map { |part| part.first }.join('')
+    "#{first_name[0]}#{last_name[0]}"
   end
 
   def to_s
-    "#{human}"
+    first_name.blank? ? email : "#{first_name} #{last_name}"
   end
 end
