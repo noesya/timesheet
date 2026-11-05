@@ -5,13 +5,14 @@ Rails.application.routes.draw do
   }
 
   resources :themes, :weeks
+  resources :logs, only: [:create, :update]
   resources :users, only: [:index, :show, :edit, :update] do
     resources :weeks
     resources :years
   end
   resources :years do
     resources :themes
+    resources :cycles
   end
-  get 'log' => 'dashboard#log', as: :log
   root "dashboard#index"
 end

@@ -32,6 +32,14 @@ class Week < ApplicationRecord
     at_date Date.today
   end
 
+  def self.previous
+    current.previous
+  end
+
+  def cycles_available
+    Cycle.available_between(starting_at, ending_at)
+  end
+
   def self.at_date(date)
     year = Year.at_date date
     number = date.cweek
@@ -49,16 +57,12 @@ class Week < ApplicationRecord
     Week.at_date starting_at + 7.days
   end
 
-  def logs_for(user)
-    logs.where(user: user)
-  end
-  
-  def non_empty_logs_for(user)
-    logs_for(user).reject { |log| log.days.zero? }
-  end
-
   def time_remaining_for(user)
     MAX_DAYS - days_logged(user: user)
+  end
+
+  def full_for_user?(user)
+    time_remaining_for(user) <= 0
   end
 
   def to_s

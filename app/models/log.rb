@@ -33,18 +33,22 @@ class Log < ApplicationRecord
   belongs_to :week
   belongs_to :year
   belongs_to :theme
-  belongs_to :cycle
+  belongs_to :cycle, optional: true
 
   before_validation :prepare
 
   scope :on_workday, -> { joins(:theme).where(themes: { workday: true }) }
-  scope :ordered, -> { }
+  scope :ordered, -> { order(:theme_id) }
 
-  def increment
-    self.days += 1
-    remaining = Week::MAX_DAYS - week.days_logged(user: user)
-    self.days = 0 if remaining <= 0
-    save
+  def self.write(week, theme, user)
+    if week.full_for_user?(user)
+      # Remove if exists
+      where(week: week, theme: theme, user: user).destroy_all
+      # Ignore otherwise
+    else
+      # Create 1 log
+      log = where(week: week, theme: theme, user: user).create
+    end
   end
 
   protected

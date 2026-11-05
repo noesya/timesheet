@@ -12,6 +12,7 @@ class Year < ApplicationRecord
 
   has_many :weeks, dependent: :destroy
   has_many :themes, -> { distinct }, through: :logs
+  has_many :cycles, -> { distinct }, through: :logs
   has_many :users, -> { distinct }, through: :logs
 
   scope :ordered, -> { order(number: :desc)}

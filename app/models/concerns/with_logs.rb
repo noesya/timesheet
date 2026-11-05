@@ -12,11 +12,11 @@ module WithLogs
     selected_logs = selected_logs.where(user: user) if user.present?
     selected_logs = selected_logs.where(year: year) if year.present?
     selected_logs = selected_logs.where(week: week) if week.present?
-    selected_logs
+    selected_logs.ordered
   end
 
   def days_logged(**args)
-    logs_filtered(**args).sum(:days)
+    logs_filtered(**args).count
   end
 
 end
