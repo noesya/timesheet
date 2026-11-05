@@ -1,6 +1,8 @@
 <% content_for :title, @cycle %>
-<% content_for :surtitle, link_to('Cycles', cycles_path) %>
-
+<% content_for :surtitle do %>
+  <%= link_to('Cycles', cycles_path) %> / 
+  <%= @cycle.code %>
+<% end %>
 <div class="d-print-none">
   <%= link_to "Modifier", edit_cycle_path(@cycle), class: 'btn btn-primary' %> 
 </div>

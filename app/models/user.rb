@@ -20,12 +20,10 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :registerable, :timeoutable and :trackable
+  include WithLogs
+
   devise  :database_authenticatable, :recoverable, :rememberable,
           :validatable, :omniauthable, omniauth_providers: [:saml]
-
-  has_many :logs
 
   default_scope { order(:last_name, :first_name) }
 
@@ -33,14 +31,6 @@ class User < ApplicationRecord
     User.where(email: auth.uid.downcase).first_or_create do |u|
       u.password = "#{Devise.friendly_token[0,20]}!"
     end
-  end
-
-  def days_logged(year: nil, theme: nil, week: nil)
-    scope = logs.on_workday
-    scope = scope.where(year: year) unless year.nil?
-    scope = scope.where(theme: theme) unless theme.nil?
-    scope = scope.where(week: week) unless week.nil?
-    scope.sum(:days)
   end
 
   def percent_logged(year: nil, theme: nil, week: nil)

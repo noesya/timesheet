@@ -1,13 +1,16 @@
 class YearsController < ApplicationController
   before_action :set_year, only: %i[ show edit update destroy ]
 
-  # GET /years or /years.json
+  # GET /years
+  # GET /users/1/years
   def index
     @years = Year.ordered
   end
 
-  # GET /years/1 or /years/1.json
+  # GET /years/1
+  # GET /users/1/years/1
   def show
+    @user = User.find(params[:user_id]) if params.has_key?(:user_id)
   end
 
   # GET /years/new

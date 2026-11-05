@@ -11,7 +11,7 @@
 </p>
 
 <% @years.each do |year| %>
-  <h2 class="h3 mt-5 mb-2"><%= year %></h2>
+  <h2 class="h3 mt-5 mb-2"><%= link_to year, [@user, year] %></h2>
   <p><%= @user.days_logged(year: year) %> jours notés</p>
   <%
   themes = []

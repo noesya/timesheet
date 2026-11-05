@@ -29,7 +29,7 @@ colors << '#EEEEEE'
         <% end unless @themes.nil? %>
     </div>
     <div class="col-lg-6">
-        <p class="lead text-end"><%= week.days_logged_for(@user) %> jours</p>
+        <p class="lead text-end"><%= week.days_logged(user: @user) %> jours</p>
         <div class="chart-container" style="position: relative; height:40vh; width: 100%">
             <canvas id="chart" width="400" height="400"></canvas>
         </div>
@@ -67,7 +67,7 @@ const myChart = new Chart(ctx, {
         </tr>
     </thead>
     <% week.themes.each do |theme| %>
-        <% days = week.days_logged_for_theme(theme) %>
+        <% days = week.days_logged(theme: theme) %>
         <% next if days.zero? %>
         <tr>
             <td><%= link_to theme, theme %></td>

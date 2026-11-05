@@ -19,8 +19,9 @@
 #  fk_rails_20b4789a1d  (year_id => years.id)
 #
 class Week < ApplicationRecord
+  include WithLogs
+
   belongs_to :year
-  has_many :logs, dependent: :destroy
   has_many :themes, -> { distinct }, through: :logs
 
   MAX_DAYS = 5
@@ -56,20 +57,8 @@ class Week < ApplicationRecord
     logs_for(user).reject { |log| log.days.zero? }
   end
 
-  def days_logged_for(user)
-    logs_for(user).sum(:days)
-  end
-
   def time_remaining_for(user)
-    MAX_DAYS - days_logged_for(user)
-  end
-
-  def days_logged_for_theme(theme)
-    logs.where(theme: theme).sum(:days)
-  end
-
-  def days_logged
-    logs.sum(:days)
+    MAX_DAYS - days_logged(user: user)
   end
 
   def to_s

@@ -5,6 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>Code</th>
       <th>Nom</th>
       <th>Début</th>
       <th>Fin</th>
@@ -13,6 +14,7 @@
   <tbody>
     <% @cycles.each do |cycle| %>
       <tr>
+        <td><%= cycle.code %></td>
         <td><%= link_to cycle, cycle %></td>
         <td><%= l cycle.started_at if cycle.started_at %></td>
         <td><%= l cycle.ended_at if cycle.ended_at %></td>

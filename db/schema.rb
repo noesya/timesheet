@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_05_130119) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_162411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_130119) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "year_id", null: false
+    t.bigint "cycle_id"
+    t.index ["cycle_id"], name: "index_logs_on_cycle_id"
     t.index ["theme_id"], name: "index_logs_on_theme_id"
     t.index ["user_id"], name: "index_logs_on_user_id"
     t.index ["week_id"], name: "index_logs_on_week_id"
@@ -77,6 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_130119) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "logs", "cycles"
   add_foreign_key "logs", "themes"
   add_foreign_key "logs", "users"
   add_foreign_key "logs", "weeks"

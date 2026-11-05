@@ -8,8 +8,9 @@
 #  updated_at :datetime         not null
 #
 class Year < ApplicationRecord
+  include WithLogs
+
   has_many :weeks, dependent: :destroy
-  has_many :logs
   has_many :themes, -> { distinct }, through: :logs
   has_many :users, -> { distinct }, through: :logs
 
@@ -25,14 +26,6 @@ class Year < ApplicationRecord
 
   def self.with(number)
     where(number: number).first_or_create
-  end
-
-  def days_logged
-    logs.sum(:days)
-  end
-
-  def days_logged_for_theme(theme)
-    logs.where(theme: theme).sum(:days)
   end
 
   def to_s

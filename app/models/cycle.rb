@@ -12,11 +12,12 @@
 #  updated_at  :datetime         not null
 #
 class Cycle < ApplicationRecord
+  include WithLogs
 
   scope :ordered, -> { order(started_at: :desc)}
   
   def to_s
-    "#{code} #{name}"
+    "#{name}"
   end
 
 end

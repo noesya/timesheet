@@ -10,13 +10,9 @@
 #  updated_at :datetime         not null
 #
 class Theme < ApplicationRecord
-  has_many :logs
+  include WithLogs
 
   default_scope { order(:name) }
-
-  def days_logged
-    logs.sum(:days)
-  end
 
   def to_s
       "#{ name }"
