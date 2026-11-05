@@ -1,0 +1,7 @@
+fr:
+  activerecord:
+    attributes:
+      theme:
+        name: Nom
+        color: Couleur
+        workday: Jour travaillé, qui compte dans les calculs

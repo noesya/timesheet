@@ -3,11 +3,11 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
-#  email                  :string           default(""), not null
+#  email                  :string           default(""), not null, uniquely indexed
 #  encrypted_password     :string           default(""), not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
-#  reset_password_token   :string
+#  reset_password_token   :string           uniquely indexed
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -31,11 +31,17 @@ class User < ApplicationRecord
   end
 
   def days_logged(year: nil, theme: nil, week: nil)
-    scope = logs
+    scope = logs.on_workday
     scope = scope.where(year: year) unless year.nil?
     scope = scope.where(theme: theme) unless theme.nil?
     scope = scope.where(week: week) unless week.nil?
     scope.sum(:days)
+  end
+
+  def percent_logged(year: nil, theme: nil, week: nil)
+    days_logged = days_logged(year: year, theme: theme, week: week)
+    days_total = days_logged(year: year, theme: nil, week: week)
+    (100.0 / days_total * days_logged).round
   end
 
   def human

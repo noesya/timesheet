@@ -16,6 +16,7 @@
         <tr>
             <th>Personne</th>
             <th>Jours</th>
+            <th>Proportion</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
         <tr>
           <td><%= link_to user, user %></td>
           <td><%= user.days_logged(theme: @theme, year: year)  %></td>
+          <td><%= user.percent_logged(theme: @theme, year: year) %>%</td>
         </tr>
       <% end %>
     </tbody>

@@ -8,7 +8,7 @@
 #  starting_at :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  year_id     :bigint           not null
+#  year_id     :bigint           not null, indexed
 #
 # Indexes
 #
@@ -16,7 +16,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (year_id => years.id)
+#  fk_rails_20b4789a1d  (year_id => years.id)
 #
 class Week < ApplicationRecord
   belongs_to :year

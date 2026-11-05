@@ -6,10 +6,10 @@
 #  days       :integer          default(0)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  theme_id   :bigint           not null
-#  user_id    :bigint           not null
-#  week_id    :bigint           not null
-#  year_id    :bigint           not null
+#  theme_id   :bigint           not null, indexed
+#  user_id    :bigint           not null, indexed
+#  week_id    :bigint           not null, indexed
+#  year_id    :bigint           not null, indexed
 #
 # Indexes
 #
@@ -20,10 +20,10 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (theme_id => themes.id)
-#  fk_rails_...  (user_id => users.id)
-#  fk_rails_...  (week_id => weeks.id)
-#  fk_rails_...  (year_id => years.id)
+#  fk_rails_312648668a  (year_id => years.id)
+#  fk_rails_8fc980bf44  (user_id => users.id)
+#  fk_rails_b596f8ee81  (theme_id => themes.id)
+#  fk_rails_e298d07143  (week_id => weeks.id)
 #
 class Log < ApplicationRecord
   belongs_to :user
@@ -32,6 +32,8 @@ class Log < ApplicationRecord
   belongs_to :theme
 
   before_validation :prepare
+
+  scope :on_workday, -> { joins(:theme).where(themes: { workday: true }) }
 
   def increment
     self.days += 1
