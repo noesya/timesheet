@@ -22,6 +22,8 @@
 class User < ApplicationRecord
   include WithLogs
 
+  CIR_RATE = 0.4
+
   devise  :database_authenticatable, :recoverable, :rememberable,
           :validatable, :omniauthable, omniauth_providers: [:saml]
 
@@ -33,14 +35,18 @@ class User < ApplicationRecord
     end
   end
 
-  def percent_logged(year: nil, theme: nil, week: nil)
-    days_logged = days_logged(year: year, theme: theme, week: week)
-    days_total = days_logged(year: year, theme: nil, week: week)
+  def percent_logged(year: nil, week: nil)
+    days_logged = days_logged(year: year, week: week, cycle: Cycle.all)
+    days_total = days_logged(year: year, week: week, cycle: [nil])
     (100.0 / days_total * days_logged).round
   end
 
   def cost(**args)
     days_logged(**args) * cost_per_day
+  end
+
+  def cir(**args)
+    cost(**args) * CIR_RATE
   end
 
   def initials

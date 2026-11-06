@@ -42,6 +42,39 @@
 </table>
 
 <div class="d-print-none">
+  <h2 class="h3 mt-5 mb-3">Montants</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Personne</th>
+        <th width="15%">Jours liés à un cycle</th>
+        <th width="15%">Pourcentage</th>
+        <th width="15%"><%= User.human_attribute_name(:cost_per_day) %></th>
+        <th width="15%"><%= User.human_attribute_name(:cost) %></th>
+        <th width="15%"><%= User.human_attribute_name(:cir) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @year.users.each do |user| %>
+        <tr>
+          <td><%= link_to user, user %></td>
+          <td><%= user.days_logged(year: @year, cycle: @year.cycles) %></td>
+          <td><%= number_to_percentage user.percent_logged(year: @year), precision: 0 %></td>
+          <td><%= number_to_currency user.cost_per_day, precision: 0 %></td>
+          <td><%= number_to_currency user.cost(year: @year, cycle: @year.cycles), precision: 0 %></td>
+          <td><%= number_to_currency user.cir(year: @year, cycle: @year.cycles), precision: 0 %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4">Total</th>
+        <th><%= number_to_currency @year.cost, precision: 0 %></th>
+        <th><%= number_to_currency @year.cir, precision: 0 %></th>
+      </tr>
+    </tfoot>
+  </table>
+
   <h2 class="h3 mt-5 mb-3">Thèmes</h2>
   <table class="table table-striped">
       <thead>

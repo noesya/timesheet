@@ -12,3 +12,9 @@ fr:
         color: Couleur
         with_research: Peut donner lieu à de la recherche
         workday: Jour travaillé, qui compte dans les calculs
+      user: 
+        cir: CIR
+        cost: Coût
+        cost_per_day: Coût par jour
+        first_name: Prénom
+        last_name: Nom

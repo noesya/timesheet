@@ -29,6 +29,18 @@ class Year < ApplicationRecord
     where(number: number).first_or_create
   end
 
+  def cost
+    cost = 0
+    users.each do |user|
+      cost += user.cost(year: self, cycle: cycles)
+    end
+    cost
+  end
+
+  def cir
+    cost * User::CIR_RATE
+  end
+
   def to_s
     "Année #{number}"
   end
