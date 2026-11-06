@@ -39,6 +39,10 @@ class User < ApplicationRecord
     (100.0 / days_total * days_logged).round
   end
 
+  def cost(**args)
+    days_logged(**args) * cost_per_day
+  end
+
   def initials
     "#{first_name[0]}#{last_name[0]}"
   end

@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  resources :cycles
   devise_for :users, controllers: {
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :themes, :weeks
+  resources :themes, :weeks, :cycles
   resources :logs, only: [:create, :update]
   resources :users, only: [:index, :show, :edit, :update] do
     resources :weeks

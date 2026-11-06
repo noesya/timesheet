@@ -14,6 +14,9 @@
 class Cycle < ApplicationRecord
   include WithLogs
 
+  has_many :years, -> { distinct }, through: :logs
+  has_many :users, -> { distinct }, through: :logs
+
   scope :ordered, -> { order(started_at: :desc) }
   scope :available_between, -> (starting_at, ending_at) { 
     # Cycles overlapping the week (open-ended dates count as unbounded)
@@ -21,6 +24,14 @@ class Cycle < ApplicationRecord
     .where('ended_at >= ? OR ended_at IS NULL', starting_at)
     .ordered
   }
+
+  def cost(year: nil)
+    @cost = 0
+    users.each do |user|
+      @cost += user.cost(cycle: self, year: year)
+    end
+    @cost
+  end
   
   def to_s
     "#{name}"

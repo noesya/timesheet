@@ -1,0 +1,58 @@
+
+<% content_for :surtitle, link_to(@year, @year) %>
+
+<div>
+  <%= simple_format @cycle.description %>
+</div>
+
+<h2 class="h3 mt-5 mb-3">Année</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Personne</th>
+      <th width="50%">Jours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cycle.users.each do |user| %>
+      <tr>
+        <td><%= user %></td>
+        <td><%= user.days_logged(cycle: @cycle, year: @year) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+      <tr>
+        <th>Total</th>
+        <th><%= @cycle.days_logged(year: @year) %></th>
+      </tr>
+  </tfoot>
+</table>
+
+<%
+@year.weeks.each do |week|
+  days = @cycle.days_logged(week: week)
+  next if days.zero?
+  %>
+  <h2 class="h3 mt-5 mb-3"><%= week %></h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Personne</th>
+        <th width="50%">Jours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%
+      @cycle.users.each do |user|
+        days = @cycle.days_logged(week: week, user: user)
+        next if days.zero?
+        %>
+        <tr>
+          <td><%= user %></td>
+          <td><%= days %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

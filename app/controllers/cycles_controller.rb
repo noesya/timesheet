@@ -6,6 +6,7 @@ class CyclesController < ApplicationController
   end
 
   def show
+    @year = Year.find params[:year_id] if params.has_key?(:year_id)
   end
 
   def new
