@@ -10,4 +10,5 @@ fr:
       theme:
         name: Nom
         color: Couleur
+        with_research: Peut donner lieu à de la recherche
         workday: Jour travaillé, qui compte dans les calculs

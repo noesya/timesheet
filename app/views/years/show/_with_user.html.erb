@@ -64,7 +64,10 @@
             </td>
             <td><%= week.days_logged(user: @user) %></td>
             <td>
-              <% week.logs_filtered(user: @user).each do |log| %>
+              <%
+              week.logs_filtered(user: @user).each do |log|
+                next unless log.theme.with_research
+                %>
                 <div class="row mb-4">
                   <div class="col-lg-4">
                     <%= log.theme %>

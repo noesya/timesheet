@@ -68,6 +68,6 @@ class ThemesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def theme_params
-      params.require(:theme).permit(:name, :color, :workday)
+      params.require(:theme).permit(:name, :color, :workday, :with_research)
     end
 end
