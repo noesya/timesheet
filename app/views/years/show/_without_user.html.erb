@@ -58,7 +58,7 @@
     <tbody>
       <% @year.users.each do |user| %>
         <tr>
-          <td><%= link_to user, user %></td>
+          <td><%= link_to user, [user, @year] %></td>
           <td><%= user.days_logged(year: @year, cycle: @year.cycles) %></td>
           <td><%= user.days_logged(year: @year) %></td>
           <td><%= number_to_percentage user.percent_logged(year: @year), precision: 0 %></td>
