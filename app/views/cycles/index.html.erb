@@ -22,3 +22,32 @@
     <% end %>
   </tbody>
 </table>
+
+<script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css" />
+
+<div id="gantt"></div>
+<script>
+let tasks = [
+  <%
+  @cycles.each do |cycle|
+    next unless cycle.started_at && cycle.ended_at
+    %>
+    {
+      id: '<%= cycle.id %>',
+      name: '<%= cycle.code %>',
+      start: '<%= cycle.started_at %>',
+      end: '<%= cycle.ended_at %>',
+      progress: 100,
+    },
+  <% end %>
+]
+let options = {
+  view_mode: 'Year',
+  infinite_padding: false,
+  language: 'fr',
+  readonly: true,
+  today_button: false,
+}
+let gantt = new Gantt("#gantt", tasks, options);
+</script>
