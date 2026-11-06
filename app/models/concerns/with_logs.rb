@@ -19,4 +19,8 @@ module WithLogs
     logs_filtered(**args).count
   end
 
+  def hours_logged(**args)
+    days_logged(**args) * User::HOURS_PER_DAY
+  end
+
 end

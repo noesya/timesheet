@@ -28,6 +28,7 @@
         <th>Personne</th>
         <th width="15%">Jours travaillés</th>
         <th width="15%">Jours liés à un cycle</th>
+        <th width="15%">Heures déclarées</th>
       </tr>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@
           <td><%= link_to user, user %></td>
           <td><%= user.days_logged(year: @year) %></td>
           <td><%= user.days_logged(year: @year, cycle: @year.cycles) %></td>
+          <td><%= user.hours_logged(year: @year, cycle: @year.cycles) %></td>
         </tr>
       <% end %>
     </tbody>

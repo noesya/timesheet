@@ -22,6 +22,7 @@
 class User < ApplicationRecord
   include WithLogs
 
+  HOURS_PER_DAY = 7
   CIR_RATE = 0.4
 
   devise  :database_authenticatable, :recoverable, :rememberable,

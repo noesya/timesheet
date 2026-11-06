@@ -10,7 +10,8 @@
   <thead>
     <tr>
       <th>Personne</th>
-      <th width="50%">Jours</th>
+      <th width="25%">Jours</th>
+      <th width="25%">Heures</th>
     </tr>
   </thead>
   <tbody>
@@ -18,6 +19,7 @@
       <tr>
         <td><%= user %></td>
         <td><%= user.days_logged(cycle: @cycle, year: @year) %></td>
+        <td><%= user.hours_logged(cycle: @cycle, year: @year) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,6 +27,7 @@
     <tr>
       <th>Total</th>
       <th><%= @cycle.days_logged(year: @year) %></th>
+      <th><%= @cycle.hours_logged(year: @year) %></th>
     </tr>
   </tfoot>
 </table>
@@ -39,7 +42,8 @@
     <thead>
       <tr>
         <th>Personne</th>
-        <th width="50%">Jours</th>
+        <th width="25%">Jours</th>
+        <th width="25%">Heures</th>
       </tr>
     </thead>
     <tbody>
@@ -51,6 +55,7 @@
         <tr>
           <td><%= user %></td>
           <td><%= days %></td>
+          <td><%= @cycle.hours_logged(week: week, user: user) %></td>
         </tr>
       <% end %>
     </tbody>
