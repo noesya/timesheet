@@ -17,7 +17,7 @@ class Cycle < ApplicationRecord
   has_many :years, -> { distinct }, through: :logs
   has_many :users, -> { distinct }, through: :logs
 
-  scope :ordered, -> { order(started_at: :desc) }
+  scope :ordered, -> { order(:code) }
   scope :available_between, -> (starting_at, ending_at) { 
     # Cycles overlapping the week (open-ended dates count as unbounded)
     where('started_at <= ? OR started_at IS NULL', ending_at)
