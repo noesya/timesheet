@@ -39,8 +39,7 @@
     <thead>
       <tr>
         <th>Personne</th>
-        <th width="25%">Jours</th>
-        <th width="25%">Heures</th>
+        <th width="50%">Jours</th>
       </tr>
     </thead>
     <tbody>
@@ -52,7 +51,6 @@
         <tr>
           <td><%= user %></td>
           <td><%= days %></td>
-          <td><%= @cycle.hours_logged(week: week, user: user) %></td>
         </tr>
       <% end %>
     </tbody>
