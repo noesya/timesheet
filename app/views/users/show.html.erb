@@ -12,7 +12,7 @@
 
 <% @years.each do |year| %>
   <h2 class="h3 mt-5 mb-2"><%= link_to year, [@user, year] %></h2>
-  <p><%= @user.days_logged(year: year) %> jours notés</p>
+  <p><%= @user.days_logged(year: year, only_workday: false) %> jours notés</p>
   <%
   themes = []
   data = {
@@ -31,7 +31,7 @@
           </tr>
         </thead>
         <% year.themes.each do |theme| 
-          days = @user.days_logged(year: year, theme: theme)
+          days = @user.days_logged(year: year, theme: theme, only_workday: false)
           next if days.zero?
           themes << theme
           data[:themes] << theme.to_s
@@ -84,12 +84,12 @@
         </tr>
     </thead>
     <% year.weeks.each do |week| %>
-        <% days = @user.days_logged(week: week) %>
+        <% days = @user.days_logged(week: week, only_workday: false) %>
         <tr>
             <td><%= link_to week, user_week_path(user_id: @user.id, id: week.id) %></td>
             <% if days > 0 %>
               <% themes.each do |theme| %>
-                <th><%= @user.days_logged(week: week, theme: theme) %></th>
+                <th><%= @user.days_logged(week: week, theme: theme, only_workday: false) %></th>
               <% end %>
               <td class="text-end"><%= days %></td>
             <% end %>

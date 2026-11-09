@@ -58,7 +58,7 @@ class Week < ApplicationRecord
   end
 
   def time_remaining_for(user)
-    MAX_DAYS - days_logged(user: user)
+    MAX_DAYS - days_logged(user: user, only_workday: false)
   end
 
   def full_for_user?(user)

@@ -2,7 +2,7 @@
 <% content_for :surtitle, link_to(@user, @user) unless @user == current_user %>
 
 <%
-logs = week.logs_filtered(user: @user)
+logs = week.logs_filtered(user: @user, only_workday: false)
 remaining = week.time_remaining_for(@user)
 labels = logs.map { |log| log.theme.to_s }
 days = logs.map { |log| 1 }
