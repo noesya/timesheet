@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cycles
+# Table name: operations
 #
 #  id          :bigint           not null, primary key
 #  code        :string
@@ -11,7 +11,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-class Cycle < ApplicationRecord
+class Operation < ApplicationRecord
   include WithLogs
 
   has_many :years, -> { distinct }, through: :logs
@@ -19,7 +19,7 @@ class Cycle < ApplicationRecord
 
   scope :ordered, -> { order(:code) }
   scope :available_between, -> (starting_at, ending_at) { 
-    # Cycles overlapping the week (open-ended dates count as unbounded)
+    # Operations overlapping the week (open-ended dates count as unbounded)
     where('started_at <= ? OR started_at IS NULL', ending_at)
     .where('ended_at >= ? OR ended_at IS NULL', starting_at)
     .ordered
@@ -28,7 +28,7 @@ class Cycle < ApplicationRecord
   def cost(year: nil)
     @cost = 0
     users.each do |user|
-      @cost += user.cost(cycle: self, year: year)
+      @cost += user.cost(operation: self, year: year)
     end
     @cost
   end

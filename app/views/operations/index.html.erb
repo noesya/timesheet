@@ -1,4 +1,4 @@
-<% content_for :title, "Cycles" %>
+<% content_for :title, "Opérations" %>
 
 <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css" />
@@ -7,14 +7,14 @@
 <script>
 let tasks = [
   <%
-  @cycles.each do |cycle|
-    next unless cycle.started_at && cycle.ended_at
+  @operations.each do |operation|
+    next unless operation.started_at && operation.ended_at
     %>
     {
-      id: '<%= cycle.id %>',
-      name: '<%= cycle.code %>',
-      start: '<%= cycle.started_at %>',
-      end: '<%= cycle.ended_at %>',
+      id: '<%= operation.id %>',
+      name: '<%= operation.code %>',
+      start: '<%= operation.started_at %>',
+      end: '<%= operation.ended_at %>',
       progress: 100,
     },
   <% end %>
@@ -32,7 +32,7 @@ let gantt = new Gantt("#gantt", tasks, options);
 
 
 <p class="d-print-none">
-  <%= link_to "Créer", new_cycle_path, class: 'btn btn-primary' %>
+  <%= link_to "Créer", new_operation_path, class: 'btn btn-primary' %>
 </p>
 
 <table class="table table-striped">
@@ -45,12 +45,12 @@ let gantt = new Gantt("#gantt", tasks, options);
     </tr>
   </thead>
   <tbody>
-    <% @cycles.each do |cycle| %>
+    <% @operations.each do |operation| %>
       <tr>
-        <td><%= cycle.code %></td>
-        <td><%= link_to cycle, cycle %></td>
-        <td><%= l cycle.started_at if cycle.started_at %></td>
-        <td><%= l cycle.ended_at if cycle.ended_at %></td>
+        <td><%= operation.code %></td>
+        <td><%= link_to operation, operation %></td>
+        <td><%= l operation.started_at if operation.started_at %></td>
+        <td><%= l operation.ended_at if operation.ended_at %></td>
       </tr>
     <% end %>
   </tbody>

@@ -12,7 +12,7 @@ class Year < ApplicationRecord
 
   has_many :weeks, dependent: :destroy
   has_many :themes, -> { distinct }, through: :logs
-  has_many :cycles, -> { distinct }, through: :logs
+  has_many :operations, -> { distinct }, through: :logs
   has_many :users, -> { distinct }, through: :logs
 
   scope :ordered, -> { order(number: :desc)}
@@ -32,7 +32,7 @@ class Year < ApplicationRecord
   def cost
     cost = 0
     users.each do |user|
-      cost += user.cost(year: self, cycle: cycles)
+      cost += user.cost(year: self, operation: operations)
     end
     cost
   end

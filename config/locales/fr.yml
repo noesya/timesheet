@@ -1,11 +1,11 @@
 fr:
   activerecord:
     attributes:
-      cycle:
+      operation:
         code: Code identifiant
         description: Description
         ended_at: Fin
-        name: Nom du cycle
+        name: Nom de l'opération
         started_at: Début
       theme:
         name: Nom

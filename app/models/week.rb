@@ -36,8 +36,8 @@ class Week < ApplicationRecord
     current.previous
   end
 
-  def cycles_available
-    Cycle.available_between(starting_at, ending_at)
+  def operations_available
+    Operation.available_between(starting_at, ending_at)
   end
 
   def self.at_date(date)

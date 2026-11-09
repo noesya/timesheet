@@ -2,7 +2,7 @@
 <% content_for :surtitle, link_to(@year, @year) %>
 
 <div>
-  <%= simple_format @cycle.description %>
+  <%= simple_format @operation.description %>
 </div>
 
 <h2 class="h3 mt-5 mb-3">Année</h2>
@@ -14,24 +14,24 @@
     </tr>
   </thead>
   <tbody>
-    <% @cycle.users.each do |user| %>
+    <% @operation.users.each do |user| %>
       <tr>
         <td><%= user %></td>
-        <td><%= user.days_logged(cycle: @cycle, year: @year) %></td>
+        <td><%= user.days_logged(operation: @operation, year: @year) %></td>
       </tr>
     <% end %>
   </tbody>
   <tfoot>
     <tr>
       <th>Total</th>
-      <th><%= @cycle.days_logged(year: @year) %></th>
+      <th><%= @operation.days_logged(year: @year) %></th>
     </tr>
   </tfoot>
 </table>
 
 <%
 @year.weeks.each do |week|
-  days = @cycle.days_logged(week: week)
+  days = @operation.days_logged(week: week)
   next if days.zero?
   %>
   <h2 class="h3 mt-5 mb-3"><%= week %></h2>
@@ -44,8 +44,8 @@
     </thead>
     <tbody>
       <%
-      @cycle.users.each do |user|
-        days = @cycle.days_logged(week: week, user: user)
+      @operation.users.each do |user|
+        days = @operation.days_logged(week: week, user: user)
         next if days.zero?
         %>
         <tr>

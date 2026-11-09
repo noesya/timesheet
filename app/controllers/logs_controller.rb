@@ -23,6 +23,6 @@ class LogsController < ApplicationController
   private
 
   def log_params
-    params.require(:log).permit(:cycle_id)
+    params.require(:log).permit(:operation_id)
   end
 end

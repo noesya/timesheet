@@ -5,10 +5,10 @@ module WithLogs
     has_many :logs, dependent: :nullify
   end
 
-  def logs_filtered(cycle: nil, theme: nil, user: nil, year: nil, week: nil, only_workday: true)
+  def logs_filtered(operation: nil, theme: nil, user: nil, year: nil, week: nil, only_workday: true)
     selected_logs = logs
     selected_logs = logs.on_workday if only_workday
-    selected_logs = selected_logs.where(cycle: cycle) if cycle.present?
+    selected_logs = selected_logs.where(operation: operation) if operation.present?
     selected_logs = selected_logs.where(theme: theme) if theme.present?
     selected_logs = selected_logs.where(user: user) if user.present?
     selected_logs = selected_logs.where(year: year) if year.present?

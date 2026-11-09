@@ -1,6 +1,0 @@
-<% content_for :title, @cycle.to_full_s %>
-
-<% partial = @year.present? ? 'cycles/show/with_year'
-                            : 'cycles/show/without_year' %> 
-<%= render partial %> 
-

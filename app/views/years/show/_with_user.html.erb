@@ -1,6 +1,6 @@
 <% content_for :surtitle, link_to(@user, @user) %>
 
-<h2 class="h3 mt-5 mb-3">Cycles</h2>
+<h2 class="h3 mt-5 mb-3">Opérations</h2>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -9,12 +9,12 @@
       <th width="30%">Jours</th>
     </tr>
   </thead>
-  <% @year.cycles.each do |cycle| %>
-    <% days = @year.days_logged(cycle: cycle, user: @user) %>
+  <% @year.operations.each do |operation| %>
+    <% days = @year.days_logged(operation: operation, user: @user) %>
     <% next if days.zero? %>
     <tr>
-      <td><%= cycle.code %></td>
-      <td><%= link_to cycle, [@year, cycle] %></td>
+      <td><%= operation.code %></td>
+      <td><%= link_to operation, [@year, operation] %></td>
       <td><%= days %></td>
     </tr>
   <% end %>
@@ -22,7 +22,7 @@
     <tr>
       <th></th>
       <th>Total</th>
-      <th><%= @user.days_logged(year: @year, cycle: @year.cycles) %></th>
+      <th><%= @user.days_logged(year: @year, operation: @year.operations) %></th>
     </tr>
   </tfoot>
 </table>
@@ -46,13 +46,13 @@
 </table>
 
 <div class="d-print-none">
-  <h2 class="h3 mt-5 mb-3">Affectation aux cycles</h2>
+  <h2 class="h3 mt-5 mb-3">Affectation aux opérations</h2>
   <table class="table">
       <thead>
         <tr>
           <th>Semaine</th>
           <th>Jours</th>
-          <th>Thème et cycles</th>
+          <th>Thème et opérations</th>
         </tr>
       </thead>
       <tbody>
@@ -75,20 +75,20 @@
                   <div class="col-lg-8">
                     <%= form_with model: log, local: false, class: 'd-inline' do |f| %>
                       <div class="form-check">
-                        <%= f.radio_button :cycle_id, '',
-                                          checked: log.cycle_id.nil?,
-                                          id: "log_#{log.id}_cycle_none",
+                        <%= f.radio_button :operation_id, '',
+                                          checked: log.operation_id.nil?,
+                                          id: "log_#{log.id}_operation_none",
                                           class: 'form-check-input',
                                           onchange: 'this.form.requestSubmit()' %>
-                        <%= f.label :cycle_id, 'Pas de recherche', for: "log_#{log.id}_cycle_none", class: 'form-check-label' %>
+                        <%= f.label :operation_id, 'Pas de recherche', for: "log_#{log.id}_operation_none", class: 'form-check-label' %>
                       </div>
-                      <% week.cycles_available.each do |cycle| %>
+                      <% week.operations_available.each do |operation| %>
                         <div class="form-check">
-                          <%= f.radio_button :cycle_id, cycle.id,
-                                            id: "log_#{log.id}_cycle_#{cycle.id}",
+                          <%= f.radio_button :operation_id, operation.id,
+                                            id: "log_#{log.id}_operation_#{operation.id}",
                                             class: 'form-check-input',
                                             onchange: 'this.form.requestSubmit()' %>
-                          <%= f.label :cycle_id, cycle.to_full_s, for: "log_#{log.id}_cycle_#{cycle.id}", class: 'form-check-label' %>
+                          <%= f.label :operation_id, operation.to_full_s, for: "log_#{log.id}_operation_#{operation.id}", class: 'form-check-label' %>
                         </div>
                       <% end %>
                     <% end %>
@@ -109,8 +109,8 @@
       <tr>
         <th>Semaine</th>
         <th width="20%">Jours travaillés</th>
-        <th width="20%">Jours liés à un cycle</th>
-        <th width="20%">Jours hors cycle</th>
+        <th width="20%">Jours liés à une opération</th>
+        <th width="20%">Jours hors opération</th>
       </tr>
     </thead>
     <tbody>
@@ -118,8 +118,8 @@
         <tr>
           <td><%= link_to week, week %></td>
           <td><%= week.days_logged(user: @user) %></td>
-          <td><%= week.days_logged(user: @user, cycle: @year.cycles) %></td>
-          <td><%= week.days_logged(user: @user, cycle: [nil]) %></td>
+          <td><%= week.days_logged(user: @user, operation: @year.operations) %></td>
+          <td><%= week.days_logged(user: @user, operation: [nil]) %></td>
         </tr>
       <% end %>
     </tbody>

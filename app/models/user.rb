@@ -36,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def percent_logged(year: nil, week: nil)
-    days_logged = days_logged(year: year, week: week, cycle: Cycle.all)
+    days_logged = days_logged(year: year, week: week, operation: Operation.all)
     days_total = days_logged(year: year, week: week)
     (100.0 / days_total * days_logged).round
   end

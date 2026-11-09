@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :themes, :weeks, :cycles
+  resources :themes, :weeks, :operations
   resources :logs, only: [:create, :update]
   resources :users, only: [:index, :show, :edit, :update] do
     resources :weeks
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
   resources :years do
     resources :themes
-    resources :cycles
+    resources :operations
   end
   root "dashboard#index"
 end

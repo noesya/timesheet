@@ -1,7 +1,7 @@
 
 <% content_for :surtitle, link_to('Années', years_path) %>
 
-<h2 class="h3 mt-5 mb-3">Cycles</h2>
+<h2 class="h3 mt-5 mb-3">Opérations</h2>
 <table class="table table-striped">
     <thead>
       <tr>
@@ -10,12 +10,12 @@
         <th width="30%">Jours</th>
       </tr>
     </thead>
-    <% @year.cycles.each do |cycle| %>
-        <% days = @year.days_logged(cycle: cycle) %>
+    <% @year.operations.each do |operation| %>
+        <% days = @year.days_logged(operation: operation) %>
         <% next if days.zero? %>
         <tr>
-          <td><%= cycle.code %></td>
-          <td><%= link_to cycle, year_cycle_path(year_id: @year, id: cycle) %></td>
+          <td><%= operation.code %></td>
+          <td><%= link_to operation, year_operation_path(year_id: @year, id: operation) %></td>
           <td><%= days %></td>
         </tr>
     <% end %>
@@ -27,7 +27,7 @@
       <tr>
         <th>Personne</th>
         <th width="15%">Jours travaillés</th>
-        <th width="15%">Jours liés à un cycle</th>
+        <th width="15%">Jours liés à une opération</th>
       </tr>
     </thead>
     <tbody>
@@ -35,7 +35,7 @@
         <tr>
           <td><%= link_to user, user %></td>
           <td><%= user.days_logged(year: @year) %></td>
-          <td><%= user.days_logged(year: @year, cycle: @year.cycles) %></td>
+          <td><%= user.days_logged(year: @year, operation: @year.operations) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -47,7 +47,7 @@
     <thead>
       <tr>
         <th>Personne</th>
-        <th>Jours liés à un cycle</th>
+        <th>Jours liés à une opération</th>
         <th>Jours au total</th>
         <th>Pourcentage</th>
         <th><%= User.human_attribute_name(:cost_per_day) %></th>
@@ -59,12 +59,12 @@
       <% @year.users.each do |user| %>
         <tr>
           <td><%= link_to user, [user, @year] %></td>
-          <td><%= user.days_logged(year: @year, cycle: @year.cycles) %></td>
+          <td><%= user.days_logged(year: @year, operation: @year.operations) %></td>
           <td><%= user.days_logged(year: @year) %></td>
           <td><%= number_to_percentage user.percent_logged(year: @year), precision: 0 %></td>
           <td><%= number_to_currency user.cost_per_day, precision: 0 %></td>
-          <td><%= number_to_currency user.cost(year: @year, cycle: @year.cycles), precision: 0 %></td>
-          <td><%= number_to_currency user.cir(year: @year, cycle: @year.cycles), precision: 0 %></td>
+          <td><%= number_to_currency user.cost(year: @year, operation: @year.operations), precision: 0 %></td>
+          <td><%= number_to_currency user.cir(year: @year, operation: @year.operations), precision: 0 %></td>
         </tr>
       <% end %>
     </tbody>
