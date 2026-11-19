@@ -1,0 +1,57 @@
+<% content_for :title, "Opérations" %>
+
+<script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css" />
+
+<div id="gantt"></div>
+<script>
+let tasks = [
+  <%
+  @operations.each do |operation|
+    next unless operation.started_at && operation.ended_at
+    %>
+    {
+      id: '<%= operation.id %>',
+      name: '<%= operation.code %>',
+      start: '<%= operation.started_at %>',
+      end: '<%= operation.ended_at %>',
+      progress: 100,
+    },
+  <% end %>
+]
+let options = {
+  view_mode: 'Year',
+  infinite_padding: false,
+  language: 'fr',
+  readonly: true,
+  today_button: false,
+  bar_height: 15,
+}
+let gantt = new Gantt("#gantt", tasks, options);
+</script>
+
+
+<p class="d-print-none">
+  <%= link_to "Créer", new_operation_path, class: 'btn btn-primary' %>
+</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Nom</th>
+      <th>Début</th>
+      <th>Fin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @operations.each do |operation| %>
+      <tr>
+        <td><%= operation.code %></td>
+        <td><%= link_to operation, operation %></td>
+        <td><%= l operation.started_at if operation.started_at %></td>
+        <td><%= l operation.ended_at if operation.ended_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

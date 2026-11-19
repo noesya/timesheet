@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "4.0.10"
 
 gem "bootsnap", require: false
-gem "cssbundling-rails"
 gem "devise"
 gem "jsbundling-rails"
 gem "jbuilder"
@@ -15,6 +14,7 @@ gem "pg", "~> 1.7"
 gem "puma", "~> 8.0"
 gem "rails", "~> 8.1.0"
 gem "rails-i18n"
+gem "sassc-rails"
 gem "simple_form"
 gem "sprockets-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -27,6 +27,7 @@ end
 group :development do
   gem "annotaterb"
   gem "web-console"
+  gem "byebug"
 end
 
 group :test do

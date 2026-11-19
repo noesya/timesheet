@@ -1,0 +1,6 @@
+<% content_for :title, @operation.to_full_s %>
+
+<% partial = @year.present? ? 'operations/show/with_year'
+                            : 'operations/show/without_year' %> 
+<%= render partial %> 
+

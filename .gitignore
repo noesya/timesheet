@@ -41,3 +41,5 @@
 /config/application.yml
 
 .dump
+
+.byebug_history

@@ -1,0 +1,80 @@
+
+<% content_for :surtitle, link_to('Opérations', operations_path) %>
+
+<div class="d-print-none">
+  <%= link_to "Modifier", edit_operation_path(@operation), class: 'btn btn-primary' %> 
+</div>
+
+<p>
+  <% if @operation.started_at %>
+    <%= l @operation.started_at %>
+  <% end %>
+  <% if @operation.ended_at %>
+    — <%= l @operation.ended_at %>
+  <% end %>
+</div>
+<div>
+  <%= simple_format @operation.description %>
+</div>
+
+<h2 class="h3 mt-5 mb-3">Opération</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Personne</th>
+      <th width="20%">Jours</th>
+      <th width="20%">Coût par jour</th>
+      <th width="20%">Coût total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @operation.users.each do |user| %>
+      <tr>
+        <td><%= user %></td>
+        <td><%= user.days_logged(operation: @operation) %></td>
+        <td><%= number_to_currency user.cost_per_day, precision: 0 %></td>
+        <td><%= number_to_currency user.cost(operation: @operation), precision: 0 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+      <tr>
+        <th>Total</th>
+        <th><%= @operation.days_logged %></th>
+        <th></th>
+        <th><%= number_to_currency @operation.cost, precision: 0 %></th>
+      </tr>
+  </tfoot>
+</table>
+
+<% @operation.years.ordered.each do |year| %>
+  <h2 class="h3 mt-5 mb-3"><%= link_to year, [year, @operation] %></h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Personne</th>
+        <th width="20%">Jours</th>
+        <th width="20%">Coût par jour</th>
+        <th width="20%">Coût total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @operation.users.each do |user| %>
+        <tr>
+          <td><%= user %></td>
+          <td><%= user.days_logged(operation: @operation, year: year) %></td>
+          <td><%= number_to_currency user.cost_per_day, precision: 0 %></td>
+          <td><%= number_to_currency user.cost(operation: @operation, year: year), precision: 0 %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+        <tr>
+          <th>Total</th>
+          <th><%= @operation.days_logged(year: year) %></th>
+          <th></th>
+          <th><%= number_to_currency @operation.cost(year: year), precision: 0 %></th>
+        </tr>
+    </tfoot>
+  </table>
+<% end %>

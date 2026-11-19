@@ -1,0 +1,4 @@
+<% content_for :title, @operation %>
+<% content_for :surtitle, link_to('Opérations', operations_path) %>
+
+<%= render "form", operation: @operation %>

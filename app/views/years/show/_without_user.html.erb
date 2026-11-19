@@ -1,0 +1,115 @@
+
+<% content_for :surtitle, link_to('Années', years_path) %>
+
+<h2 class="h3 mt-5 mb-3">Opérations</h2>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Nom</th>
+        <th width="30%">Jours</th>
+      </tr>
+    </thead>
+    <% @year.operations.each do |operation| %>
+        <% days = @year.days_logged(operation: operation) %>
+        <% next if days.zero? %>
+        <tr>
+          <td><%= operation.code %></td>
+          <td><%= link_to operation, year_operation_path(year_id: @year, id: operation) %></td>
+          <td><%= days %></td>
+        </tr>
+    <% end %>
+</table>
+
+<h2 class="h3 mt-5 mb-3">Personnes</h2>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Personne</th>
+        <th width="15%">Jours travaillés</th>
+        <th width="15%">Jours liés à une opération</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @year.users.each do |user| %>
+        <tr>
+          <td><%= link_to user, user %></td>
+          <td><%= user.days_logged(year: @year) %></td>
+          <td><%= user.days_logged(year: @year, operation: @year.operations) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>
+
+<div class="d-print-none">
+  <h2 class="h3 mt-5 mb-3">Montants</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Personne</th>
+        <th>Jours liés à une opération</th>
+        <th>Jours au total</th>
+        <th>Pourcentage</th>
+        <th><%= User.human_attribute_name(:cost_per_day) %></th>
+        <th><%= User.human_attribute_name(:cost) %></th>
+        <th><%= User.human_attribute_name(:cir) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @year.users.each do |user| %>
+        <tr>
+          <td><%= link_to user, [user, @year] %></td>
+          <td><%= user.days_logged(year: @year, operation: @year.operations) %></td>
+          <td><%= user.days_logged(year: @year) %></td>
+          <td><%= number_to_percentage user.percent_logged(year: @year), precision: 0 %></td>
+          <td><%= number_to_currency user.cost_per_day, precision: 0 %></td>
+          <td><%= number_to_currency user.cost(year: @year, operation: @year.operations), precision: 0 %></td>
+          <td><%= number_to_currency user.cir(year: @year, operation: @year.operations), precision: 0 %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="5">Total</th>
+        <th><%= number_to_currency @year.cost, precision: 0 %></th>
+        <th><%= number_to_currency @year.cir, precision: 0 %></th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <h2 class="h3 mt-5 mb-3">Thèmes</h2>
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Thème</th>
+          <th width="30%">Jours travaillés</th>
+        </tr>
+      </thead>
+      <% @year.themes.each do |theme| %>
+        <% days = @year.days_logged(theme: theme) %>
+        <% next if days.zero? %>
+        <tr>
+          <td><%= link_to theme, year_theme_path(year_id: @year, id: theme) %></td>
+          <td><%= days %></td>
+        </tr>
+      <% end %>
+  </table>
+
+  <h2 class="h3 mt-5 mb-3">Semaines</h2>
+  <table class="table">
+      <thead>
+        <tr>
+          <th>Semaine</th>
+          <th width="50%">Jours travaillés</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @year.weeks.each do |week| %>
+          <tr>
+            <td><%= link_to week, week %></td>
+            <td><%= week.days_logged %></td>
+          </tr>
+        <% end %>
+      </tbody>
+  </table>
+</div>

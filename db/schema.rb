@@ -10,19 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_05_130119) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_09_135549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
-
-  create_table "cycles", force: :cascade do |t|
-    t.string "name"
-    t.string "code"
-    t.date "started_at"
-    t.date "ended_at"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "logs", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -32,10 +22,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_130119) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "year_id", null: false
+    t.bigint "operation_id"
+    t.index ["operation_id"], name: "index_logs_on_operation_id"
     t.index ["theme_id"], name: "index_logs_on_theme_id"
     t.index ["user_id"], name: "index_logs_on_user_id"
     t.index ["week_id"], name: "index_logs_on_week_id"
     t.index ["year_id"], name: "index_logs_on_year_id"
+  end
+
+  create_table "operations", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.date "started_at"
+    t.date "ended_at"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "themes", force: :cascade do |t|
@@ -44,6 +46,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_130119) do
     t.datetime "updated_at", null: false
     t.string "color"
     t.boolean "workday", default: true
+    t.boolean "with_research", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -77,6 +80,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_130119) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "logs", "operations"
   add_foreign_key "logs", "themes"
   add_foreign_key "logs", "users"
   add_foreign_key "logs", "weeks"

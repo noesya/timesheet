@@ -8,9 +8,11 @@
 #  updated_at :datetime         not null
 #
 class Year < ApplicationRecord
+  include WithLogs
+
   has_many :weeks, dependent: :destroy
-  has_many :logs
   has_many :themes, -> { distinct }, through: :logs
+  has_many :operations, -> { distinct }, through: :logs
   has_many :users, -> { distinct }, through: :logs
 
   scope :ordered, -> { order(number: :desc)}
@@ -27,12 +29,16 @@ class Year < ApplicationRecord
     where(number: number).first_or_create
   end
 
-  def days_logged
-    logs.sum(:days)
+  def cost
+    cost = 0
+    users.each do |user|
+      cost += user.cost(year: self, operation: operations)
+    end
+    cost
   end
 
-  def days_logged_for_theme(theme)
-    logs.where(theme: theme).sum(:days)
+  def cir
+    cost * User::CIR_RATE
   end
 
   def to_s

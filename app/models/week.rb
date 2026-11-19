@@ -19,8 +19,9 @@
 #  fk_rails_20b4789a1d  (year_id => years.id)
 #
 class Week < ApplicationRecord
+  include WithLogs
+
   belongs_to :year
-  has_many :logs, dependent: :destroy
   has_many :themes, -> { distinct }, through: :logs
 
   MAX_DAYS = 5
@@ -29,6 +30,14 @@ class Week < ApplicationRecord
 
   def self.current
     at_date Date.today
+  end
+
+  def self.previous
+    current.previous
+  end
+
+  def operations_available
+    Operation.available_between(starting_at, ending_at)
   end
 
   def self.at_date(date)
@@ -48,28 +57,12 @@ class Week < ApplicationRecord
     Week.at_date starting_at + 7.days
   end
 
-  def logs_for(user)
-    logs.where(user: user)
-  end
-  
-  def non_empty_logs_for(user)
-    logs_for(user).reject { |log| log.days.zero? }
-  end
-
-  def days_logged_for(user)
-    logs_for(user).sum(:days)
-  end
-
   def time_remaining_for(user)
-    MAX_DAYS - days_logged_for(user)
+    MAX_DAYS - days_logged(user: user, only_workday: false)
   end
 
-  def days_logged_for_theme(theme)
-    logs.where(theme: theme).sum(:days)
-  end
-
-  def days_logged
-    logs.sum(:days)
+  def full_for_user?(user)
+    time_remaining_for(user) <= 0
   end
 
   def to_s

@@ -1,6 +1,21 @@
 namespace :app do
   desc 'Apply fixes'
   task fix: :environment do
+    Log.transaction do
+      Log.where(days: 0).where(created_at: ...Time.zone.parse('2026-11-05 18:00')).delete_all
+      Log.where('days > 1').find_each do |log|
+        (log.days - 1).times do
+          Log.create!(
+            user: log.user,
+            week: log.week,
+            year: log.year,
+            theme: log.theme,
+            cycle: log.cycle
+          )
+        end
+        log.update_column :days, 1
+      end
+    end
   end
 
   desc 'Get database'

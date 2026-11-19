@@ -20,12 +20,12 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :registerable, :timeoutable and :trackable
+  include WithLogs
+
+  CIR_RATE = 0.4
+
   devise  :database_authenticatable, :recoverable, :rememberable,
           :validatable, :omniauthable, omniauth_providers: [:saml]
-
-  has_many :logs
 
   default_scope { order(:last_name, :first_name) }
 
@@ -35,18 +35,18 @@ class User < ApplicationRecord
     end
   end
 
-  def days_logged(year: nil, theme: nil, week: nil)
-    scope = logs.on_workday
-    scope = scope.where(year: year) unless year.nil?
-    scope = scope.where(theme: theme) unless theme.nil?
-    scope = scope.where(week: week) unless week.nil?
-    scope.sum(:days)
+  def percent_logged(year: nil, week: nil)
+    days_logged = days_logged(year: year, week: week, operation: Operation.all)
+    days_total = days_logged(year: year, week: week)
+    (100.0 / days_total * days_logged).round
   end
 
-  def percent_logged(year: nil, theme: nil, week: nil)
-    days_logged = days_logged(year: year, theme: theme, week: week)
-    days_total = days_logged(year: year, theme: nil, week: week)
-    (100.0 / days_total * days_logged).round
+  def cost(**args)
+    days_logged(**args) * cost_per_day
+  end
+
+  def cir(**args)
+    cost(**args) * CIR_RATE
   end
 
   def initials
